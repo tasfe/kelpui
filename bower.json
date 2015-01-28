@@ -1,0 +1,49 @@
+{
+  "name": "kelpui",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "moocss",
+      "email": "moocss@gmail.com",
+      "homepage": "http://moocss.com"
+    },
+  ],
+  "description": "Sleek, intuitive, and powerful front-end framework for faster and easier web development.",
+  "keywords": [
+    "css",
+    "js",
+    "less",
+    "mobile-first",
+    "responsive",
+    "front-end",
+    "framework",
+    "web",
+    "web-components"
+  ],
+  "homepage": "",
+  "main": [
+    "dist/css/kelpui.css",
+    "dist/css/kelpui.min.css",
+    "dist/js/kelpui.js",
+    "dist/js/kelpui.min.js"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "composer.json",
+    "CONTRIBUTING.md",
+    "docs"
+  ],
+  "dependencies": {
+    "jquery": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+}
