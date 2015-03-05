@@ -1,0 +1,15 @@
+@mixin text-align($align:left) {
+  text-align: $align;
+}
+
+%text-left{
+  @include text-align(left);
+}
+
+%text-center {
+  @include text-align(center);
+}
+
+%text-right {
+  @include text-align(right);
+}

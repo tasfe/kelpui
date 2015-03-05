@@ -1,0 +1,26 @@
+@charset "UTF-8";
+// ---------------------------------------------------------------
+// 隐藏文字
+// 1.text-indent:-999em 存在性能问题：
+// @link http://www.zeldman.com/2012/03/01/replacing-the-9999px-hack-new-image-replacement/
+// ---------------------------------------------------------------
+@mixin text-hide{
+  text-indent: 101%; // 1
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+%text-hide {
+  @include text-hide;
+}
+// =============================Use===============================
+//  .element {
+//    @include text-hide;
+//  }
+// ===============================Output==========================
+//  .element {
+//    overflow: hidden;
+//    text-indent: 101%;
+//    white-space: nowrap;
+//  }
+// ===============================================================

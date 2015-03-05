@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+// Calculate rems from pixels
+@function px2rem($pxval, $base: 16px) {
+  @if not unitless($pxval) {
+    $pxval: strip-units($pxval);
+  }
+  @if not unitless($base) {
+    $base: strip-units($base);
+  }
+  @return ($pxval / $base) * 1rem;
+}
+// ============================Use========================
+// .container {
+//   font-size: px2rem(12px);
+// }
+// ==============================Output======================
+// .container {
+//   font-size: 0.75rem;
+// }
+// ==========================================================

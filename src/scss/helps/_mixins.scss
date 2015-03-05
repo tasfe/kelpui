@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+@import "mixins/BEM";
+@import "mixins/HolyGrail-layout";
+@import "mixins/alerts";
+@import "mixins/background-transparent";
+@import "mixins/calc";
+@import "mixins/css3";
+@import "mixins/ellipsis-overflow";
+@import "mixins/float";
+@import "mixins/fluid-ratio";
+@import "mixins/inline-block";
+@import "mixins/label";
+@import "mixins/font-face.scss";
+@import "mixins/media-queries";
+@import "mixins/opacity";
+@import "mixins/parent-hover";
+@import "mixins/parent-status";
+@import "mixins/pseudo-elements";
+@import "mixins/rem";
+@import "mixins/resize";
+@import "mixins/selector-replace";
+@import "mixins/visuallyhidden";
+
+@mixin form-control-focus($color: $input-border-focus) {
+  $color-rgba: rgba(red($color), green($color), blue($color), .6);
+  &:focus {
+    border-color: $color;
+    outline: 0;
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+  }
+}
+@mixin placeholder($color: $input-color-placeholder) {
+  &::-moz-placeholder           { color: $color;   // Firefox
+                                  opacity: 1; } // See https://github.com/twbs/bootstrap/pull/11526
+  &:-ms-input-placeholder       { color: $color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
+}
+@mixin form-control-validation($text-color: #555, $border-color: #ccc, $background-color: #f5f5f5) {
+  // Color the label and help text
+  .help_block,
+  .help_inline,
+  .control_label,
+  .radio,
+  .checkbox,
+  .radio_inline,
+  .checkbox-inline  {
+    color: $text-color;
+  }
+  // Set the border and box shadow on specific inputs to match
+  .form_control {
+    border-color: $border-color;
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075)); // Redeclare so transitions work
+    &:focus {
+      border-color: darken($border-color, 10%);
+      $shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px lighten($border-color, 20%);
+      @include box-shadow($shadow);
+    }
+  }
+}
+
+@mixin label-variant($color) {
+  background-color: $color;
+  &[href] {
+    &:hover,
+    &:focus {
+      background-color: darken($color, 10%);
+    }
+  }
+}
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
+}

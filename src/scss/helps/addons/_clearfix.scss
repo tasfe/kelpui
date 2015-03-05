@@ -1,0 +1,39 @@
+@charset "UTF-8";
+// --------------------------------------------------------------
+// 闭合浮动
+// @link http://nicolasgallagher.com/micro-clearfix-hack/
+// --------------------------------------------------------------
+
+@mixin clearfix{
+  *zoom: 1;
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+    overflow: hidden;
+  }
+}
+%clearfix{
+  @include clearfix;
+}
+
+// =============================Use===============================
+//  .element{
+//    @include clearfix;
+//  }
+// ===============================Output==========================
+//  .element {
+//    zoom: 1;
+//  }
+//  .element:before, .element:after {
+//    content: "";
+//    display: table;
+//  }
+//  .element:after {
+//    clear: both;
+//    overflow: hidden;
+//  }
+// ===============================================================

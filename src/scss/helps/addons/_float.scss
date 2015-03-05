@@ -1,0 +1,12 @@
+@mixin float($float:left) {
+  float: $float;
+  *display: inline;
+}
+
+%pull-left{
+  @include float(left);
+}
+
+%pull-right {
+  @include float(right);
+}

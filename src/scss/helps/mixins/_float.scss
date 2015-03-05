@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+@mixin float($side: left,$support-for-ie:true){
+
+	float: unquote($side);
+	@if $support-for-ie{
+		_display: inline;
+	}
+}
+
+// ==================Use=======================
+// .pull-left {
+//   @include float(right);
+// }
+// ===================Output====================
+// .pull-left {
+//   float: right;
+//   _display: inline;
+// }
+// ============================================

@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+// Strip units from values
+@function strip-units($number){
+  @return $number / ($number * 0 + 1);
+}
+
+// ============================Use========================
+//   $dimension: strip-units(10em);
+// ==============================Output======================
+//   $dimension: 10;
+// ==========================================================
