@@ -1,17 +1,20 @@
 @charset "UTF-8";
 
-// Helps
+// Variables
 // ----------------------------------
 @import "base/variables";
-@import "helps/_functions";
+
+// Helps
+// ----------------------------------
+@import "helps/functions";
 @import "helps/mixins";
-@import "helps/_helpers";
+@import "helps/helpers";
 
 // Base
 // ----------------------------------
-@import "base/normalize";
-@import "base/base";
-@import "base/typography";
+//@import "base/normalize";
+@import "base/reset";
+@import "base/type";
 
 // Components
 // ----------------------------------
@@ -37,20 +40,8 @@
 
 // pages
 // ----------------------------------
-@import "pages/home";
-@import "pages/case";
-@import "pages/buy";
-@import "pages/product";
-@import "pages/login";
-@import "pages/register";
-@import "pages/cart";
-@import "pages/sales";
+@import "pages/page";
 
 // member
 // ----------------------------------
-@import "pages/portal";
-@import "pages/order";
-@import "pages/account";
-@import "pages/favorite";
-@import "pages/coupon";
-@import "pages/address";
+
