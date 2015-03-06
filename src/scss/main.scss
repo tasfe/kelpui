@@ -4,31 +4,31 @@
 // ----------------------------------
 @import "base/variables";
 
-// Helps
-// ----------------------------------
-@import "helps/functions";
-@import "helps/mixins";
-@import "helps/helpers";
-
 // Base
 // ----------------------------------
 //@import "base/normalize";
 @import "base/reset";
 @import "base/type";
 
+// Helps
+// ----------------------------------
+@import "helps/functions";
+@import "helps/mixins";
+@import "helps/helpers";
+
 // Components
 // ----------------------------------
 @import "components/rating";
 @import "components/breadcrumb";
 @import "components/filter";
-@import "components/pagination";
+@import "components/_pagination";
 @import "components/button";
-@import "components/nav";
+@import "layout/_nav";
 @import "components/slider";
 @import "components/block";
 @import "components/zebra-datepicker";
 @import "components/table";
-@import "components/form";
+@import "components/_forms";
 
 // Layout
 // ----------------------------------
