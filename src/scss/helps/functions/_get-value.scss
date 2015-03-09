@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+// map get value
+@function get-value ($map,$key){
+  $value: map-get($map, $key) or $key;
+
+  @if map-has-key($map, $key) {
+    $value: get-value($map, $key);
+  }
+
+  @return $value;
+}
+
+// ============================Use========================
+// $icons: (
+//   twitter: "\e32f",
+//   dribbble: "\e341",
+//   github: "\e34c",
+// );
+// .icon-github{
+//   content: get-value($icons, "github");
+// }
+// .icon-twitter{
+//   content: get-value($icons, "twitter");
+// }
+// ==============================Output======================
+//  .icon {
+//    content: "\e34c";
+//  }
+//  .icon {
+//    content: "\e32f";
+//  }
+// ==========================================================

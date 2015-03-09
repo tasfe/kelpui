@@ -2,7 +2,6 @@
 
 @import "mixins/BEM";
 @import "mixins/HolyGrail-layout";
-@import "mixins/alerts";
 @import "mixins/background-transparent";
 @import "mixins/calc";
 @import "mixins/css3";
@@ -21,6 +20,7 @@
 @import "mixins/resize";
 @import "mixins/selector-replace";
 @import "mixins/visuallyhidden";
+@import "mixins/user-select";
 
 @mixin form-control-focus($color: $input-border-focus) {
   $color-rgba: rgba(red($color), green($color), blue($color), .6);

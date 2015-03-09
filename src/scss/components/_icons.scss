@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+// 导入font-face
+// ------------------------------
+@include font-face("icons", "/fonts/icons");
+
+// 字体图标集合
+// ------------------------------
+$icons: (
+  skull: "\e18c",
+  warning: "\e243",
+  checkmark: "\e258",
+  instagram: "\e32e",
+  twitter: "\e32f",
+  dribbble: "\e341",
+  github: "\e34c",
+  soundcloud: "\e35d",
+  stackoverflow: "\e367",
+
+  danger: skull,
+  escher: danger,
+  godel: escher,
+  bach: godel,
+  kevin bacon: bach,
+);
+
+//
+// ------------------------------
+@mixin icon($icons, $name) {
+  &:before {
+    content: get-value($icons, $name);
+  }
+}
+
+[class^="icon-"], [class*=" icon-"]{
+  @include user-select(text);
+}
+[class^="icon-"]:before, [class*=" icon-"]:before,
+[class^="icon-"]:after, [class*=" icon-"]:after {
+  display: inline-block;
+  overflow: hidden;
+  text-indent: 0;
+  font-family: "icons";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Output
+// ------------------------------
+@each $name, $glyph in $icons {
+  .icon-#{$name} {
+    @include icon($icons, $name);
+  }
+}
