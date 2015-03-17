@@ -51,9 +51,9 @@ linters:
   IdWithExtraneousSelector:
     enabled: true
 
-  Indentation:
+  Indentation: #代码缩进
     enabled: true
-    width: 4
+    width: 2
 
   LeadingZero:
     enabled: true
@@ -70,8 +70,8 @@ linters:
   PlaceholderInExtend:
     enabled: true
 
-  PropertySortOrder:
-    enabled: true
+  PropertySortOrder: #属性排序
+    enabled: false
 
   PropertySpelling:
     enabled: true
@@ -106,7 +106,7 @@ linters:
     spaces: 0
 
   StringQuotes:
-    enabled: true
+    enabled: false
     style: single_quotes # or double_quotes
 
   TrailingSemicolonAfterPropertyValue:

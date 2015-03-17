@@ -1,18 +1,14 @@
 @charset "UTF-8";
 
 // ---------------------------------------------------------------
-// 浮动
+// 隐藏元素
 // ---------------------------------------------------------------
 
-@mixin float($float:left) {
-  float: $float;
-  *display: inline;
+@mixin hide {
+  display: none !important;
+  visibility: hidden;
 }
 
-%pull-left {
-  @include float(left);
-}
-
-%pull-right {
-  @include float(right);
+%hide {
+  @include hide;
 }

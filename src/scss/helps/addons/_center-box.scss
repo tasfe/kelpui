@@ -1,0 +1,100 @@
+//
+// 未知高度垂直居中组件
+// 支持图片，单行或多行文字，以及图文混排
+//-------------------------------------
+
+// 去除 inline-block 的空隙
+.center-box {
+  font-size: 0;
+  *word-spacing: -1px; // IE6、7
+  height: 100%; // 继承父级高度
+}
+
+// 修复 Safari 5- inline-block 的空隙
+@media (-webkit-min-device-pixel-ratio:0) {
+  .center-box {
+    letter-spacing: -5px;
+  }
+}
+
+// 使用空标签生成一个高度100%的参照元素
+.center-box .center-hack {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  font-size: 0;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.center-box .center-body {
+  letter-spacing: normal;
+  word-spacing: normal;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  font-size: 12px;
+  vertical-align: middle; // 保证文字垂直居中
+  padding: 0 !important; // 防止设置边距导致居中失效
+  margin: 0 !important;
+  width: 100%; // 保证连续字符也能居中
+  white-space: normal; // 保证连续字符换行
+  word-wrap: break-word;
+}
+
+.center-box .center-img {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 100%;
+  text-align: center; // 图片默认水平居中
+  vertical-align: middle;
+  padding: 0 !important; // 防止设置边距导致居中失效
+  margin: 0 !important;
+}
+
+.center-box img {
+  vertical-align: middle; // 去除现代浏览器 img 底部空隙
+}
+
+// ===============================Output==========================
+// 单行文字
+// ----------------------
+// <div class="center-box well" style="height: 60px;">
+//   <b class="center-hack"></b>
+//   <div class="center-body">
+//     单行文字垂直居中
+//   </div>
+// </div>
+
+// 多行文字
+// ----------------------
+// <div class="center-box well" style="height: 100px;">
+//   <b class="center-hack"></b>
+//   <div class="center-body">
+//     春天的雪总是不期而至，和人一样。远处池塘亲吻着翩翩的雪花，泛起涟漪，初恋一般…雪停了，池塘总是在雪花消融后怀念她的模样……
+//   </div>
+// </div>
+
+// 只有图片
+// ----------------------
+// <div class="center-box well" style="height: 320px;">
+//   <b class="center-hack"></b>
+//   <div class="center-body">
+//     <div class="center-img">
+//       <img src="http://ww4.sinaimg.cn/mw1024/90f78f62jw1ediottavmoj20ew0hs75z.jpg" width="200" alt="">
+//       <img src="http://ww4.sinaimg.cn/mw1024/90f78f62jw1ediottavmoj20ew0hs75z.jpg" width="160" alt="">
+//     </div>
+//   </div>
+// </div>
+
+// 图文混排
+// ----------------------
+// <div class="center-box well" style="height: 320px;">
+//   <b class="center-hack"></b>
+//   <div class="center-body">
+//     <img src="http://ww4.sinaimg.cn/mw1024/90f78f62jw1ediottavmoj20ew0hs75z.jpg" width="160" alt="">
+//     <div>当往事回首，你的笑容带不走。我心中那一丝哀愁，在每年秋天这个时候。</div>
+//   </div>
+// </div>

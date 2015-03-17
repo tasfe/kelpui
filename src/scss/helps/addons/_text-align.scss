@@ -1,8 +1,14 @@
+@charset "UTF-8";
+
+// ---------------------------------------------------------------
+// text-align
+// ---------------------------------------------------------------
+
 @mixin text-align($align:left) {
   text-align: $align;
 }
 
-%text-left{
+%text-left {
   @include text-align(left);
 }
 

@@ -2,10 +2,10 @@
 
 //Author：Janking　（https://github.com/Janking）
 
-@mixin backgroundTransparent($color,$opacity,$support-for-ie:true){
+@mixin backgroundTransparent($color,$opacity,$support-for-ie:true) {
 	background-color:rgba($color,$opacity);
-	@if $support-for-ie{
-		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#{ie-hex-str(rgba($color,$opacity))},endColorstr=#{ie-hex-str(rgba($color,$opacity))});
+	@if $support-for-ie {
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr = #{ie-hex-str(rgba($color,$opacity))}, endColorstr = #{ie-hex-str(rgba($color,$opacity))});
 		
 		:root & {
 			filter:none;

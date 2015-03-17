@@ -1,11 +1,13 @@
 @charset "UTF-8";
+
 // ---------------------------------------------------------------
 // 文字溢出显示省略号
 // 1. Opera 9-10.6
 // 2. Chrome 21+ bug https://bugs.webkit.org/show_bug.cgi?id=121902
 // 3. IE 6 7 需要宽度
 // ---------------------------------------------------------------
-%ellipsis-basic{
+
+%ellipsis-basic {
   display: block;
   white-space: nowrap;
   word-wrap: normal;

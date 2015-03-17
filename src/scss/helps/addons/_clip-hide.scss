@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+// ---------------------------------------------------------------
+// 裁剪方式隐藏元素
+// 1. IE6-8 有严重漏洞，请勿使用 https://www.hkcert.org/my_url/zh/101104_ms_ie_css_tagparsing_vuln
+// 2. VoiceOver 无法读出宽高为 0 的元素
+// ---------------------------------------------------------------
+
+@mixin clip-hide {
+  position: absolute !important; // clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px); // 1
+  padding: 0 !important;
+  border: 0 none!important;
+  height: 1px !important; // 2
+  width: 1px !important;
+  overflow: hidden;
+}
+
+%clip-hide {
+  @include clip-hide
+}

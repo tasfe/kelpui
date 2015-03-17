@@ -1,11 +1,11 @@
 @charset "UTF-8";
-// --------------------------------------------------------------
+
 // 三角形
 // --------------------------------------------------------------
 
 $uiname : ".arrow";
 
-#{$uiname}{
+#{$uiname} {
   font-size: 0;
   width: 0;
   height: 0;
@@ -19,49 +19,49 @@ $uiname : ".arrow";
 
   &-top {
     border-bottom-style: solid;
-    border-bottom-color: #2AB2DF;
+    border-bottom-color: #2ab2df;
   }
 
   &-bottom {
     border-top-style: solid;
-    border-top-color: #2AB2DF;
+    border-top-color: #2ab2df;
   }
 
   &-left {
     border-right-style: solid;
-    border-right-color: #2AB2DF;
+    border-right-color: #2ab2df;
   }
 
   &-right {
     border-left-style: solid;
-    border-left-color: #2AB2DF;
+    border-left-color: #2ab2df;
   }
 
   // ◤左上角
   &-left-top {
     border-top-style: solid;
-    border-top-color: #2AB2DF;
+    border-top-color: #2ab2df;
     border-left-width: 0 !important;
   }
 
   // ◥右上角
   &-right-top {
     border-top-style: solid;
-    border-top-color: #2AB2DF;
+    border-top-color: #2ab2df;
     border-right-width: 0 !important;
   }
 
   // ◣左下角
   &-left-bottom {
     border-bottom-style: solid;
-    border-bottom-color: #2AB2DF;
+    border-bottom-color: #2ab2df;
     border-left-width: 0 !important;
   }
 
   // ◢右下角
   &-right-bottom {
     border-bottom-style: solid;
-    border-bottom-color: #2AB2DF;
+    border-bottom-color: #2ab2df;
     border-right-width: 0 !important;
   }
 }

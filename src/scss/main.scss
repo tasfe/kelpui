@@ -18,25 +18,20 @@
 
 // Components
 // ----------------------------------
-@import "components/rating";
 @import "components/breadcrumb";
-@import "components/filter";
-@import "components/_pagination";
-@import "components/button";
-@import "layout/_nav";
-@import "components/slider";
-@import "components/block";
-@import "components/zebra-datepicker";
+@import "components/pagination";
+@import "components/buttons";
+@import "components/nav";
 @import "components/table";
-@import "components/_forms";
+@import "components/forms";
 
 // Layout
 // ----------------------------------
 @import "layout/layout";
-@import "layout/headerbar";
-@import "layout/header";
-@import "layout/sidebar";
-@import "layout/footer";
+@import "layout/top-bar";
+//@import "layout/header";
+//@import "layout/sidebar";
+//@import "layout/footer";
 
 // pages
 // ----------------------------------

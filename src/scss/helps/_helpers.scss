@@ -7,48 +7,57 @@
 @import "addons/float";
 @import "addons/text-align";
 
-/*-----------------------------------------------
-    common styles
------------------------------------------------*/
-/* text align */
+// ----------------------------------------------
+//   common styles
+// ----------------------------------------------
+// text align
 .tl{ @extend %text-left; }
 .tc{ @extend %text-center; }
 .tr{ @extend %text-right; }
 
-/* 强制不换行 */
+// 强制不换行
 .nowrap {
   white-space: nowrap;
   word-wrap: normal;
 }
-/* 连续字符换行 */
+
+// 连续字符换行
 .wrap {
-  white-space: normal;
-  word-wrap: break-word;
+  white-space:normal;
+  word-wrap:break-word;
+  word-break:break-all;
 }
 .hidden, .hide {
   display: none;
 }
-/* 文字溢出显示省略号 */
+
+// 文字溢出显示省略号
 .ellipsis {
   @extend %ellipsis;
 }
 
-/* 隐藏文字 */
-
+// 隐藏文字
 .text-hide {
   @extend %text-hide;
 }
 
-/* contain floats */
-.clearfix{
+// 统一用双线显示人民币符号「&yen;(￥)」
+.rmb,
+.yuan {
+  font-family: arial;
+  font-style: normal;
+}
+
+// contain floats
+.clearfix {
   @extend %clearfix;
 }
-.group{
+.group {
   @extend %clearfix;
 }
-.container{
+.container {
   @extend %clearfix;
 }
-.layout{
+.layout {
   @extend %clearfix;
 }

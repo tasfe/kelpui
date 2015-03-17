@@ -2,41 +2,40 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var lazypipe = require('lazypipe');
+
 var pkg = require('./package.json');
 
+var isDeploy = process.argv[process.argv.length - 1] == 'deploy';
+
+var paths = {
+    app: 'src/',
+    dist: 'dist/',
+    tmp : '.tmp/',
+    tmpStyles: '.tmp' + 'styles/'
+};
+
 var config = {
-    browsersync: {
-        development: {
-            server: {
-                baseDir: [development, build, src]
-            },
-            port: 9999,
-            files: [
-                developmentAssets + '/css/*.css',
-                developmentAssets + '/js/*.js',
-                developmentAssets + '/images/**',
-                developmentAssets + '/fonts/*'
-            ]
-        },
-        production: {
-            server: {
-                baseDir: [production]
-            },
-            port: 9998
-        }
-    },
-    delete: {
-        src: [developmentAssets]
-    },
     sass: {
-        src: srcAssets + '/scss/**/*.{sass,scss}',
-        dest: developmentAssets + '/css',
+        src: paths.app + '/scss/**/*.{sass,scss}',
+        dest: '/css',
         options: {
             noCache: true,
             compass: false,
             bundleExec: true,
             sourcemap: true,
             sourcemapPath: '../../_assets/scss'
+        }
+    },
+    scsslint: {
+        src: [
+            paths.app + '/scss/**/*.{sass,scss}',
+            '!' + paths.app + '/scss/base/_normalize.scss',
+            '!' + paths.app + '/scss/base/_reset.scss',
+            '!' + paths.app + '/scss/base/_type.scss'
+        ],
+        options: {
+            bundleExec: true
         }
     },
     autoprefixer: {
@@ -51,137 +50,9 @@ var config = {
         ],
         cascade: true
     },
-    browserify: {
-        // Enable source maps
-        debug: true,
-        // Additional file extensions to make optional
-        extensions: ['.coffee', '.hbs'],
-        // A separate bundle will be generated for each
-        // bundle config in the list below
-        bundleConfigs: [{
-            entries: './' + srcAssets + '/javascripts/application.js',
-            dest: developmentAssets + '/js',
-            outputName: 'application.js'
-        }, {
-            entries: './' + srcAssets + '/javascripts/head.js',
-            dest: developmentAssets + '/js',
-            outputName: 'head.js'
-        }]
-    },
-    images: {
-        src: srcAssets + '/images/**/*',
-        dest: developmentAssets + '/images'
-    },
-    webp: {
-        src: productionAssets + '/images/**/*.{jpg,jpeg,png}',
-        dest: productionAssets + '/images/',
-        options: {}
-    },
-    gzip: {
-        src: production + '/**/*.{html,xml,json,css,js}',
-        dest: production,
-        options: {}
-    },
-    copyfonts: {
-        development: {
-            src: srcAssets + '/fonts/*',
-            dest: developmentAssets + '/fonts'
-        },
-        production: {
-            src: developmentAssets + '/fonts/*',
-            dest: productionAssets + '/fonts'
-        }
-    },
     watch: {
-        sass: srcAssets + '/scss/**/*.{sass,scss}',
-        scripts: srcAssets + '/javascripts/**/*.js',
-        images: srcAssets + '/images/**/*',
-        sprites: srcAssets + '/images/**/*.png',
-        svg: 'vectors/*.svg'
-    },
-    scsslint: {
-        src: [
-            srcAssets + '/scss/**/*.{sass,scss}',
-            '!' + srcAssets + '/scss/base/_sprites.scss',
-            '!' + srcAssets + '/scss/helpers/_meyer-reset.scss'
-        ],
-        options: {
-            bundleExec: true
-        }
-    },
-    jshint: {
-        src: srcAssets + '/javascripts/*.js'
-    },
-    sprites: {
-        src: srcAssets + '/images/sprites/icon/*.png',
-        dest: {
-            css: srcAssets + '/scss/base/',
-            image: srcAssets + '/images/sprites/'
-        },
-        options: {
-            cssName: '_sprites.scss',
-            cssFormat: 'css',
-            cssOpts: {
-                cssClass: function(item) {
-                    // If this is a hover sprite, name it as a hover one (e.g. 'home-hover' -> 'home:hover')
-                    if (item.name.indexOf('-hover') !== -1) {
-                        return '.icon-' + item.name.replace('-hover', ':hover');
-                        // Otherwise, use the name as the selector (e.g. 'home' -> 'home')
-                    } else {
-                        return '.icon-' + item.name;
-                    }
-                }
-            },
-            imgName: 'icon-sprite.png',
-            imgPath: '/assets/images/sprites/icon-sprite.png'
-        }
-    },
-    optimize: {
-        css: {
-            src: developmentAssets + '/css/*.css',
-            dest: productionAssets + '/css/',
-            options: {
-                keepSpecialComments: 0
-            }
-        },
-        js: {
-            src: developmentAssets + '/js/*.js',
-            dest: productionAssets + '/js/',
-            options: {}
-        },
-        images: {
-            src: developmentAssets + '/images/**/*.{jpg,jpeg,png,gif}',
-            dest: productionAssets + '/images/',
-            options: {
-                optimizationLevel: 3,
-                progessive: true,
-                interlaced: true
-            }
-        },
-        html: {
-            src: production + '/**/*.html',
-            dest: production,
-            options: {
-                collapseWhitespace: true
-            }
-        }
-    },
-    rsync: {
-        src: production + '/**',
-        options: {
-            destination: '~/path/to/my/website/root/',
-            root: production,
-            hostname: 'mydomain.com',
-            username: 'user',
-            incremental: true,
-            progress: true,
-            relative: true,
-            emptyDirectories: true,
-            recursive: true,
-            clean: true,
-            exclude: ['.DS_Store'],
-            include: []
-        }
+        sass: this.src + '/scss/**/*.{sass,scss}',
+        images: this.src + '/images/**/*'
     }
 };
 
@@ -200,3 +71,87 @@ var banner = [
 /*----------------------------------------------------  
     Tasks
 ----------------------------------------------------*/
+/* 部署之前 sass lint */
+gulp.task("sass-lint", function(){
+    return gulp.src(config.scsslint.src)
+        .pipe($.cached("sasslint"))
+        .pipe($.if(!isDeploy, $.scssLint({config: "scsslint.yml"})));
+});
+/* 编译SCSS */
+gulp.task("sass-compile", ["sass-lint"], function(){
+    return gulp.src(config.paths.sass)
+        .pipe($.plumber())
+        .pipe($.cached("scss"))
+        .pipe($.rubySass({
+            noCache: true,
+            compass: false,
+            style: 'expanded',
+            sourcemap: true,
+            sourcemapPath: '.'
+        }))
+        .pipe($.sourcemaps.init())
+        .pipe($.filter(['*.css', '!*.map'])) // Don’t write sourcemaps of sourcemaps
+        .pipe($.autoprefixer({
+            browsers: [
+                '> 1%',
+                'safari 5',
+                'ie 7',
+                'ie 8',
+                'ie 9',
+                'opera 12.1',
+                'android 4'
+            ],
+            cascade: true
+        }))
+        .pipe($.sourcemaps.write('.', { includeContent: false }))
+        .pipe($.filter().restore()) // Restore original files
+        .pipe(gulp.dest(paths.tmpStyles))
+        .pipe($.size())
+        .pipe($.notify({
+            onLast: true,
+            message: 'SCSS 编译完毕！'
+        }));
+});
+
+/* css 检测 */
+var csslintChannel = lazypipe().pipe($.csslint, "csslintrc.json").pipe($.csslint.reporter);
+gulp.task("css-lint", function(){
+    return gulp.src(paths.tmpStyles + "/**/*")
+        .pipe($.filter(['*.css', '!*.map']))
+        .pipe($.cached("csslint"))
+        .pipe($.if(!isDeploy, csslintChannel()));
+});
+
+/* css 合并 */
+gulp.task("css-join", ["css-lint"], function(){
+    return gulp.src(paths.tmpStyles+"/**/*")
+        .pipe($.filter(['*.css', '!*.map']))
+        .pipe($.concat("app.css"))
+        .pipe($.size())
+        .pipe(gulp.dest(paths.tmp))
+        .pipe($.notify({
+            onLast: true,
+            message: 'css 文件合并完毕！'
+        }));
+});
+
+/* 生成 css 主文件 */
+gulp.task("css-app", function(cb){
+    //按照顺序执行taks
+    return runSequence("sass-compile", "css-join",  cb);
+});
+
+/* 清除 tmp styles */
+gulp.task("clean-tmp-styles", function(){
+    return gulp.src([config.paths.tmpStyles, config.paths.tmp+"/app.css"], { read: false })
+        .pipe($.rimraf());
+});
+
+gulp.task("deploy", [
+    "css-lint"
+]);
+
+gulp.task("default", [
+    "clean-tmp-styles",
+    "css-lint"
+]);

@@ -32,9 +32,14 @@ $icons: (
   }
 }
 
-[class^="icon-"], [class*=" icon-"]{
+[class^="icon-"], [class*=" icon-"] {
   @include user-select(text);
 }
+
+// 1. 防止 OS X 中 Webfont 视觉上看起来变粗
+// 2. Fiefox 25 开始支持「-moz-osx-font-smoothing:auto(默认)|grayscale」
+// Demo: http://jsbin.com/iWItiQe/2
+// ------------------------------
 [class^="icon-"]:before, [class*=" icon-"]:before,
 [class^="icon-"]:after, [class*=" icon-"]:after {
   display: inline-block;
@@ -48,8 +53,8 @@ $icons: (
   text-transform: none;
   text-rendering: auto;
   line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; /* 1 */
+  -moz-osx-font-smoothing: grayscale; /* 2 */
 }
 
 // Output
