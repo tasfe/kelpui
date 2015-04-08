@@ -1,8 +1,18 @@
 @charset "UTF-8";
 
+// Vendors
+// ----------------------------------
+@import "vendors/bootstrap";
+
 // Variables
 // ----------------------------------
-@import "base/variables";
+@import "helps/variables";
+
+// Helps
+// ----------------------------------
+@import "helps/functions";
+@import "helps/mixins";
+@import "helps/helpers";
 
 // Base
 // ----------------------------------
@@ -10,11 +20,14 @@
 @import "base/reset";
 @import "base/type";
 
-// Helps
+// Layout
 // ----------------------------------
-@import "helps/functions";
-@import "helps/mixins";
-@import "helps/helpers";
+@import "layout/layout";
+@import "layout/top-bar";
+//@import "layout/header";
+//@import "layout/sidebar";
+//@import "layout/footer";
+
 
 // Components
 // ----------------------------------
@@ -25,18 +38,13 @@
 @import "components/table";
 @import "components/forms";
 
-// Layout
-// ----------------------------------
-@import "layout/layout";
-@import "layout/top-bar";
-//@import "layout/header";
-//@import "layout/sidebar";
-//@import "layout/footer";
 
-// pages
+// Pages
 // ----------------------------------
-@import "pages/page";
+@import "pages/index";
+//@import "pages/page";
 
-// member
+// Themes
 // ----------------------------------
-
+@import "themes/theme";
+@import "themes/admin";

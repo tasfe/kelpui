@@ -1,51 +1,56 @@
 'use strict';
-
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var lazypipe = require('lazypipe');
+var gulp = require('gulp'),
+    $ = require('gulp-load-plugins')(),
+    scsslint = require("gulp-scss-lint"),
+    lazypipe = require('lazypipe');
 
 var pkg = require('./package.json');
 
 var isDeploy = process.argv[process.argv.length - 1] == 'deploy';
 
+console.log("isDeploy = " + isDeploy);
+
 var paths = {
-    app: 'src/',
-    dist: 'dist/',
-    tmp : '.tmp/',
-    tmpStyles: '.tmp' + 'styles/'
+    app: 'src',
+    dist: 'dist',
+    tmp : '.tmp',
+    tmpStyles: '.tmp' + '/styles'
 };
 
 var config = {
     sass: {
         src: paths.app + '/scss/**/*.{sass,scss}',
-        dest: '/css',
+        dest: paths.dist + '/css',
         options: {
             noCache: true,
             compass: false,
             bundleExec: true,
+            style: 'expanded',
             sourcemap: true,
-            sourcemapPath: '../../_assets/scss'
+            sourcemapPath: '.'
         }
     },
     scsslint: {
         src: [
-            paths.app + '/scss/**/*.{sass,scss}',
+            paths.app + '/scss/base/*.{sass,scss}',
             '!' + paths.app + '/scss/base/_normalize.scss',
             '!' + paths.app + '/scss/base/_reset.scss',
             '!' + paths.app + '/scss/base/_type.scss'
         ],
         options: {
-            bundleExec: true
+            endless: true,
+            sync: true,
+            config: "scsslint.yml"
         }
     },
     autoprefixer: {
         browsers: [
-            'last 2 versions',
+            '> 1%',
             'safari 5',
-            'ie 8',
+            'ie 7',
+            'ie8',
             'ie 9',
             'opera 12.1',
-            'ios 6',
             'android 4'
         ],
         cascade: true
@@ -68,41 +73,36 @@ var banner = [
 ].join(' | ');
 
 
-/*----------------------------------------------------  
+/*----------------------------------------------------
     Tasks
 ----------------------------------------------------*/
-/* 部署之前 sass lint */
-gulp.task("sass-lint", function(){
+/* 部署之前 scss lint */
+gulp.task("scss-lint", function(){
+
+    var fail = process.argv.indexOf("--fail") !== -1;
+
     return gulp.src(config.scsslint.src)
-        .pipe($.cached("sasslint"))
-        .pipe($.if(!isDeploy, $.scssLint({config: "scsslint.yml"})));
+        .pipe($.if(!isDeploy, $.cache(scsslint(config.scsslint.options), {
+            success: function(scsslintFile) {
+                return scsslintFile.scsslint.success;
+            },
+            value: function(scsslintFile) {
+                return {
+                scsslint: scsslintFile.scsslint
+                };
+            }
+        })))
+        .pipe($.if(fail, scsslint.failReporter()));
 });
+
 /* 编译SCSS */
-gulp.task("sass-compile", ["sass-lint"], function(){
-    return gulp.src(config.paths.sass)
+gulp.task("scss-compile", ["scss-lint"], function(){
+    return gulp.src(config.sass.src)
         .pipe($.plumber())
-        .pipe($.cached("scss"))
-        .pipe($.rubySass({
-            noCache: true,
-            compass: false,
-            style: 'expanded',
-            sourcemap: true,
-            sourcemapPath: '.'
-        }))
         .pipe($.sourcemaps.init())
+        .pipe($.cache($.sass()))
+        .pipe($.autoprefixer(config.autoprefixer))
         .pipe($.filter(['*.css', '!*.map'])) // Don’t write sourcemaps of sourcemaps
-        .pipe($.autoprefixer({
-            browsers: [
-                '> 1%',
-                'safari 5',
-                'ie 7',
-                'ie 8',
-                'ie 9',
-                'opera 12.1',
-                'android 4'
-            ],
-            cascade: true
-        }))
         .pipe($.sourcemaps.write('.', { includeContent: false }))
         .pipe($.filter().restore()) // Restore original files
         .pipe(gulp.dest(paths.tmpStyles))
