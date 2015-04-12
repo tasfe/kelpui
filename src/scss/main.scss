@@ -18,6 +18,7 @@
 // ----------------------------------
 //@import "base/normalize";
 @import "base/reset";
+@import "base/common";
 @import "base/type";
 
 // Layout
@@ -47,4 +48,5 @@
 // Themes
 // ----------------------------------
 @import "themes/theme";
-@import "themes/admin";
+//@import "themes/admin";
+

@@ -1,9 +1,6 @@
 @charset "UTF-8";
 
-@import "mixins/BEM";
 @import "mixins/HolyGrail-layout";
-@import "mixins/background-transparent";
-@import "mixins/calc";
 @import "mixins/css3";
 @import "mixins/ellipsis-overflow";
 @import "mixins/float";
@@ -13,12 +10,8 @@
 @import "mixins/font-face.scss";
 @import "mixins/media-queries";
 @import "mixins/opacity";
-@import "mixins/parent-hover";
-@import "mixins/parent-status";
-@import "mixins/pseudo-elements";
 @import "mixins/rem";
 @import "mixins/resize";
-@import "mixins/selector-replace";
 @import "mixins/visuallyhidden";
 @import "mixins/user-select";
 

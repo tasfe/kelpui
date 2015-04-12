@@ -53,8 +53,8 @@ $icons: (
   text-transform: none;
   text-rendering: auto;
   line-height: 1;
-  -webkit-font-smoothing: antialiased; /* 1 */
-  -moz-osx-font-smoothing: grayscale; /* 2 */
+  -webkit-font-smoothing: antialiased; // 1
+  -moz-osx-font-smoothing: grayscale; // 2
 }
 
 // Output
